@@ -47,3 +47,17 @@ export const editarReceta = async(req,res) => {
     res.status(500).json({mensaje:"Ocurrio un error al editar el receta."})
   }
 }
+
+export const borrarReceta = async(req,res) => {
+  try {
+  const recetaBuscado = await Receta.findById(req.params.id);
+  if(!recetaBuscado){
+    return res.status(404).json({Mensaje:"El receta no fue encontrado."})
+  }
+  await Receta.findByIdAndDelete(req.params.id);
+  res.status(200).json({mensaje: "El receta fue borrado correcta"})
+} catch (error) {
+  console.error(error)
+  res.status(500).json({mensaje:"Ocurrio un error al borrar el receta."})
+}
+}
