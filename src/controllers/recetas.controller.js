@@ -1,8 +1,15 @@
 import Receta from "../database/Models/Receta.js";
 
-export const listarRecetas = (req, res) => {
-  console.log("Hola comisión");
-  res.send("Aqui listar la lista de recetas.");
+export const listarRecetas = async(req, res) => {
+  try {
+    const recetas = await Receta.find();
+    res.status(200).json(recetas);
+  } catch (error) {
+   console.error(error)
+   res.status(404).json({
+    mensaje: "No se pudo obtener la lista de recetas."
+   })
+  }
 };
 
 export const crearReceta = async (req, res) => {
